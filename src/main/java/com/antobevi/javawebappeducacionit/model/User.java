@@ -10,16 +10,23 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Owner {
+@Table(name = "`User`")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "`id`", nullable = false)
     private Long id;
     @NotBlank(message = "Se debe ingresar un nombre.")
+    @Column(name="`name`")
     private String name;
     @NotBlank(message = "Se debe ingresar un apellido.")
+    @Column(name="`surname`")
     private String surname;
-    @NotBlank(message = "Debe tener un direcci//u00F3n.")
-    private String address; // TODO: Deberia ser una clase
+    @NotBlank(message = "Se debe ingresar un nombre de usuario.")
+    @Column(name="`username`")
+    private String username;
+    @NotBlank(message = "Se debe ingresar una contraseña.")
+    @Column(name="`password`")
+    private String password;
 
 }

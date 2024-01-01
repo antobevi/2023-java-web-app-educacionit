@@ -25,7 +25,7 @@ INSERT INTO Pet(name, age, species, owner_id)
 VALUES('Momo', 2, 'Gato', 5);
 
 -- Insertamos usuarios con sus contraseñas
---INSERT INTO User(name, surname, username, password)
---VALUES('Antonella', 'Bevilacqua', 'antobevib', '12345678');
---INSERT INTO User(name, surname, username, password)
---VALUES('Antonella', 'Bevilacqua', 'antobevib', '$2a$12$iqkwHaIJm6diZlghlAjqwexMWiyKmkNz1QfowhXiLPIv022FVErnu');
+INSERT INTO "User"(name, surname, username, password)
+VALUES('Antonella', 'Bevilacqua', 'antobevib', '12345678');
+INSERT INTO "User"(name, surname, username, password)
+VALUES('Antonella', 'Bevilacqua', 'antobevib', '$2a$12$iqkwHaIJm6diZlghlAjqwexMWiyKmkNz1QfowhXiLPIv022FVErnu');
