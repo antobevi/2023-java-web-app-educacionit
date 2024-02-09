@@ -19,15 +19,17 @@ public class JwtTokenUtil {
     @Value("${jwt.expiration}")
     private Long expiration;
 
+    public JwtTokenUtil() {}
+
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
 
         return createToken(claims, userDetails.getUsername());
     }
 
-    private String createToken(Map<String, Object> claim, String subject) {
+    private String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
-                .setClaims(claim)
+                .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
@@ -36,12 +38,12 @@ public class JwtTokenUtil {
     }
 
     public boolean validateToken(String token, UserDetails userDetails) {
-        final String username = getUserNameFromToken(token);
+        final String username = getUsernameFromToken(token);
 
         return (username.equals(userDetails.getUsername()) && !this.isTokenExpired(token));
     }
 
-    public String getUserNameFromToken(String token) {
+    public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
 

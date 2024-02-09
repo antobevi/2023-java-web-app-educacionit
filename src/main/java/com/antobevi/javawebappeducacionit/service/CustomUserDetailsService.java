@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+// Valida que lo que ingresa el usuario coincide con lo que tengo en mi sistema
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
@@ -14,7 +15,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userService.findUserByName(username);
+        User user = userService.findUserByUsername(username);
 
         if(user == null) {
             throw new UsernameNotFoundException("User " + username + " not found.");
@@ -27,11 +28,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        if("userExample".equals(username)) {
-            return WebAppUser.withUsername("userExample").password("{noop}pass")
-                    .roles("USER").build(); // WebAppUser me lo provee Spring
+        if("user".equals(username)) {
+            return org.springframework.security.core.userdetails.User.withUsername("user")
+                    .password("{noop}pass") // noop define que la password no esta encriptada
+                    .roles("USER").build();
         } else {
-            throw new UsernameNotFoundException("WebAppUser " + username + " not found.");
+            throw new UsernameNotFoundException("User " + username + " not found.");
         }
 
     }

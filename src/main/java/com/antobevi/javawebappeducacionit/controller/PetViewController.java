@@ -3,15 +3,18 @@ package com.antobevi.javawebappeducacionit.controller;
 import com.antobevi.javawebappeducacionit.model.Pet;
 import com.antobevi.javawebappeducacionit.service.OwnerService;
 import com.antobevi.javawebappeducacionit.service.PetService;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Logger.*;
 
 @Controller
-@RequestMapping("/api/pets")
+@Data
+@RequestMapping("/pets")
 public class PetViewController {
     @Autowired
     private PetService petService;
@@ -21,7 +24,7 @@ public class PetViewController {
     @GetMapping("/")
     public String redirectToPets() {
 
-        return "redirect:/api/pets/list";
+        return "redirect:/pets/list";
     }
 
     @GetMapping("/list")
@@ -29,47 +32,50 @@ public class PetViewController {
         List<Pet> pets = petService.listPets();
         model.addAttribute("pets", pets);
 
-        return "list-pets";
+        return "pets";
     }
 
-    @GetMapping("/new-pet")
+    @GetMapping("/new")
     public String getFormNewPet(Model model) {
         model.addAttribute("owners", ownerService.listOwners());
-        //model.addAttribute("pet", new Pet());
+        model.addAttribute("pet", new Pet());
 
-        return "new-pet-form";
+        return "newPetForm";
     }
 
     @PostMapping("/add")
-    public String addPet(@ModelAttribute Pet pet, @RequestParam Long ownerId) {
+    public String addNewPet(@ModelAttribute Pet pet, @RequestParam(name = "ownerId") Long ownerId) {
         petService.savePet(pet, ownerId);
 
-        return "redirect:/api/pets/list";
+        java.util.logging.Logger.getLogger("log").info("Nombre mascota: " + pet.getName());
+        java.util.logging.Logger.getLogger("log").info("Nombre dueño: " + pet.getOwner().toString());
+        java.util.logging.Logger.getLogger("log").info("ID dueño: " + pet.getOwner().getId().toString());
+
+        return "redirect:/pets/list";
     }
 
-    // TODO: Buscar diferencias entre PathVariable y RequestParam
-    @GetMapping("/delete/{id}") // El DeleteMapping se usa al hacer un controlador REST
-    public String deletePet(@PathVariable Long petId) {
+    @GetMapping("/delete/{petId}") // El DeleteMapping se usa al hacer un controlador REST
+    public String deletePet(@PathVariable(name = "petId") Long petId) {
         petService.deletePet(petId);
 
-        return "redirect:/api/pets/list";
+        return "redirect:/pets/list";
     }
 
-    @GetMapping("/update/{id}") // Model es lo que le enviamos a la vista (el front)
-    public String getFormUpdatePet(@PathVariable Long petId, Model model) {
+    @GetMapping("/update/{petId}") // Model es lo que le enviamos a la vista (el front)
+    public String getFormUpdatePet(@PathVariable(name = "petId") Long petId, Model model) {
         Pet pet = petService.getPetById(petId);
         model.addAttribute("pet", pet);
         model.addAttribute("owners", ownerService.listOwners()); // Por si se quiere actualizar el dueño
 
-        return "update-pet-form";
+        return "updatePet";
     }
 
-    @PostMapping("/update/{id}") // ModelAttribute es el modelo que recibimos de la vista
-    public String updatePet(@PathVariable Long petId, @ModelAttribute Pet updatedPet, @RequestParam Long ownerId) {
+    @PostMapping("/update/{petId}") // ModelAttribute es el modelo que recibimos de la vista
+    public String updatePet(@ModelAttribute Pet updatedPet, @PathVariable(name = "petId") Long petId, @RequestParam(name = "owner") Long ownerId) {
         updatedPet.setOwner(ownerService.getOwnerById(ownerId));
         petService.updatePet(petId, updatedPet);
 
-        return "redirect:/api/pets/list";
+        return "redirect:/pets/list";
     }
 
 }

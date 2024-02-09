@@ -12,31 +12,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api/owners")
+@RequestMapping("/owners")
 public class OwnerViewController { // Controlador para una vista ya que estamos haciendo una Web App
     @Autowired
     private OwnerService ownerService;
+
+    @GetMapping("/")
+    public String redirectToOwners() {
+
+        return "redirect:/owners/list";
+    }
 
     @GetMapping("/list")
     public String listOwners(Model model) { // Model no refiere a la capa Modelo, si no que es lo que representa nuestra vista
         List<Owner> owners = ownerService.listOwners();
         model.addAttribute("owners", owners);
 
-        return "list-owners";
+        return "owners";
     }
 
-    @GetMapping("/new-owner") // Formulario para crear un nuevo dueño
+    @GetMapping("/new") // Formulario para crear un nuevo dueño
     public String getFormNewOwner(Model model) {
         model.addAttribute("owner", new Owner());
 
-        return "new-owner";
+        return "newOwnerForm";
     }
 
     @PostMapping("/add") // Guarda el dueño en la base de datos
-    public String addOwner(Owner owner) {
+    public String addNewOwner(Owner owner) {
         ownerService.saveOwner(owner);
 
-        return "redirect:/api/owners/list";
+        return "redirect:/owners/list";
     }
 
 }

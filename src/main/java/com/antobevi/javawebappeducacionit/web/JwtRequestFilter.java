@@ -18,6 +18,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+// Filtra los endpoints, indica URLs permitidas sin autenticacion (como el login), etc.
 @Component
 @Data
 public class JwtRequestFilter extends OncePerRequestFilter {
@@ -36,7 +37,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             jwtToken = requestTokenHeader.substring(7); // Nos quedamos con la carga util
 
             try {
-                username = jwtTokenUtil.getUserNameFromToken(jwtToken);
+                username = jwtTokenUtil.getUsernameFromToken(jwtToken);
             } catch (IllegalArgumentException e) {
                 logger.error("Unable to access token JWT.");
             } catch (ExpiredJwtException e) {

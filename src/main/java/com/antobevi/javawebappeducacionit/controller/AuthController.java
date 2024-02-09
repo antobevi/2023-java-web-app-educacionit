@@ -8,25 +8,25 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/api")
 public class AuthController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/login")
-    public String showLoginForm(Model model) {
+    @GetMapping("/signup")
+    public String getSignUpForm(Model model) {
         model.addAttribute("user", new User());
 
-        return "login";
+        return "signup";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/signup")
     public String registerUser(User user) {
         userService.saveUser(user);
 
-        return "redirect:/api/login";
+        return "redirect:/login";
     }
 
 }

@@ -1,5 +1,6 @@
 -- Esto es util para hacer demostraciones o probar
 
+
 -- Insertamos datos de ejemplo en la tabla Owner
 INSERT INTO Owner(name, surname, address)
 VALUES('Maximiliano', 'Sandoval', 'Calle 123');
@@ -24,8 +25,8 @@ VALUES('Bondiola', 3, 'Perro', 4);
 INSERT INTO Pet(name, age, species, owner_id)
 VALUES('Momo', 2, 'Gato', 5);
 
--- Insertamos usuarios con sus contraseñas
-INSERT INTO "User"(name, surname, username, password)
-VALUES('Antonella', 'Bevilacqua', 'antobevib', '12345678');
-INSERT INTO "User"(name, surname, username, password)
-VALUES('Antonella', 'Bevilacqua', 'antobevib', '$2a$12$iqkwHaIJm6diZlghlAjqwexMWiyKmkNz1QfowhXiLPIv022FVErnu');
+-- Insertamos usuarios con sus contraseñas encriptadas
+--INSERT INTO "User"(name, surname, username, password)
+--VALUES('Antonella', 'Bevilacqua', 'antobevib', '$2a$08$BK28FvD3/hUaVe6ioWqW/ef84x0D6lMgDN8jAA.vnJRpH.W4Rk07y'); -- 1234
+INSERT INTO "User"(username, password)
+VALUES('antobevib', '$2a$08$BK28FvD3/hUaVe6ioWqW/ef84x0D6lMgDN8jAA.vnJRpH.W4Rk07y'); --1234

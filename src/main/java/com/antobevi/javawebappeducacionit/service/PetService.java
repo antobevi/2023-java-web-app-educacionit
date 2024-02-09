@@ -19,13 +19,14 @@ public class PetService {
 
     public List<Pet> listPets() {
         //Sort sortBy = Sort.by(Sort.Direction.DESC, "name").ignoreCase();
-        return petRepository.findAllOrderByNameIgnoreCaseDesc();
+        return petRepository.findAllOrderById(); //findAllOrderByNameIgnoreCaseDesc
     }
 
     public Pet savePet(Pet pet, Long ownerId) {
         // Buscamos el dueño y si no lo encuentra tira una excepcion
         Owner owner = ownerRepository.findById(ownerId).orElseThrow(() -> new RuntimeException("Owner not found."));
         pet.setOwner(owner);
+
         return petRepository.save(pet);
     }
 

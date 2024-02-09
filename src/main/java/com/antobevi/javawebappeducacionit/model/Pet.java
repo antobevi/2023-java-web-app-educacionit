@@ -19,12 +19,12 @@ public class Pet {
     private String name;
     @Min(value = 0, message = "La edad debe estar entre 0 y 25 años.")
     @Max(value = 25, message = "La edad debe estar entre 0 y 25 años.")
-    @NotEmpty(message = "Se debe ingresar una edad.")
+    @NotNull(message = "Se debe ingresar una edad.")
     private Integer age;
     @NotBlank(message = "Se debe ingresar la especie.")
     private String species; // especie: perro, gato, etc.
     @ManyToOne
-    @NotNull(message = "El dueño no puede estar en blanco")
+    @NotNull(message = "Se debe seleccionar un dueño.")
     private Owner owner; // NotEmpty y NotBlank se usa solo con Strings
 
 }

@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     // La operacion SAVE viene por defecto
-    User findByName(String name);
+    User findByUsername(String username);
 
 }
